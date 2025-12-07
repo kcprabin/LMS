@@ -8,7 +8,7 @@ it's easy u just need to clone this repo and after cloning
 update code and this readme after touching this file and folder
 .env files are with me 
 
-eowenrfls
+okeyyyyyyyyyyy
 -for frontend (react)
 1. just use npm install command and work on those making ui untill i make custom  api  also write understandable comment and push after checking 
 
