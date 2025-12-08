@@ -1,35 +1,18 @@
-# Library Management System
+How to run code !!! 
 
-A full-stack **Library Management System** built with **React**, **Node.js & Express**, and **MongoDB**.  
-This application allows users to manage books, track borrowing, and maintain library operations efficiently.
+it's easy u just need to clone this repo and after cloning 
 
----
 
-## 🚀 Features
+-for backend (express)
+1. we have package.json in backend all u need is to run npm install in your terminal to access backend file and packaged 
+update code and this readme after touching this file and folder
+.env files are with me 
 
-- **User Management:** Register, login, and manage users.
-- **Book Management:** Add, update, delete, and view books.
-- **Borrow & Return:** Track borrowed books and due dates.
-- **Admin Panel:** Manage all users and books (optional).
-- **RESTful API:** Backend API for seamless communication with frontend.
-- **Database:** MongoDB for storing users, books, and transactions.
 
----
 
-## 🛠 Tech Stack
+-for frontend (react)
+1. just use npm install command and work on those making ui untill i make custom  api  also write understandable comment and push after checking 
 
-- **Frontend:** React, HTML, CSS, JavaScript  
-- **Backend:** Node.js, Express.js  
-- **Database:** MongoDB  
-- **Other Tools:** Axios, bcrypt, JWT  
+update code and readme after touching file too 
 
----
 
-## ⚡ Installation
-
-### Backend
-
-```bash
-git clone <repository-url>
-cd backend
-npm install
