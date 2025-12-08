@@ -34,7 +34,7 @@ userSchema.pre("save",
 )
 // check password code 
 
-userSchema.methods.IsPasswordCorrect() = async function (password) {
+userSchema.methods.IsPasswordCorrect = async function (password) {
     return  await bcrypt.compare(password,this.password)
 }
 

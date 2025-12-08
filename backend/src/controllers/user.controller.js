@@ -3,60 +3,58 @@ import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt"
 
 const registerUser = asyncHandler(async (req, res) => {
-    //Handle user inputs from frontend
-    const [studentemail , Password] = req.body
-    // validations of correct format for empty
-    if([{studentemail,Password}].some(data =>{data?.trim()=="" })){
-        res.status(400,"Empty feild ")
-    }
-
+    // 400 means user error here in this code base
 
     
+    //Handle user inputs from frontend as objects 
+    const {studentemail , Password} = req.body
 
-
-
-});
-
-const loginUser = asyncHandler(
-     async (req, res) => {
-    // get login data
-    const {kuid, password } = req.body;
-
-   // match ku id
-    const findUser = await User.findOne({
-        kuid:findUserKuid
-    })
-    if(findUser){
-        console.log("okey")
-    }
-    if(!findUser){
-        res.status(400).json({
-            message:"no user found"
+    // validations of correct format for empty
+    if(Object.values({studentemail,Password}).some(data =>String(data)?.trim()=="" )){
+        return res.status(400).json({
+            messege:"Empty feild"
         })
     }
-
-    const Ismatched = await bcrypt.compare(password,findUser.Password)
-
-
-    if(!Ismatched){
-        return res.status(500).json({
-        message:"incorrect password"
-       })
+        
+    
+    // email formatiing check
+    const gmailFormat = /^.*@gmail\.com$/;
+    if(!gmailFormat.test(studentemail)){
+        res.status(400,"Formating must be in form @gmail.com")
     }
+
+
+    //checking if already exists 
+     try {
+      
+     const userExists = await User.findOne({
+        studentemail})
+
+        if(userExists){
+        res.status(400,"already exist")
+     }
+        
+     } catch (error) {
+        console.log(error)
+ 
+     }
     
-    if(Ismatched){
-       res.status(100).json({
-        message:" password correct "
-       })
-    } 
+
+     // saving data in database 
+    const NewUser = User.create({
+        studentemail,
+        Password
+     })
 
 
-
-    
+      return res.status(100).json({
+        messege:"User created",
+        user : NewUser
+      })
 });
-export {registerUser,
-    loginUser
 
+
+export {registerUser,
 }
 
 
