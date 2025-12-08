@@ -1,17 +1,14 @@
-
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom'; // Add useLocation
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-
-
 
 const Register = () => {
   const navigate = useNavigate();
-  
-    const location = useLocation(); 
+  const location = useLocation(); 
   
   // Get the initialUser from navigation state
-  const initialRole = location.state?.initialUser || 'student'; // Add this line
+  const initialRole = location.state?.initialUser || 'student'; 
+  
   const [formData, setFormData] = useState({
     email: '',
     confirmEmail: '',
@@ -59,26 +56,27 @@ const Register = () => {
     e.preventDefault();
     setError('');
 
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     setIsLoading(true);
 
     try {
-      const response = await axios.post('/api/v1/users/register', {
-        studentemail: formData.email,
-        Password: formData.password,
-        role: 'student'
+      const response = await axios.post('http://localhost:8000/api/v1/users/register', {
+        studentemail: formData.email,        
+        Password: formData.password,           
+        role: initialRole     // not specified                 
       });
 
-      if (response.data.success) {
-        navigate('/login', { 
+    
+      if (response.data.user) {
+        navigate('/login', {
           state: { message: 'Registration successful! Please login.' }
         });
       }
+
     } catch (error) {
       console.error('Registration error:', error);
+     
       setError(error.response?.data?.message || 'Registration failed. Please try again.');
     } finally {
       setIsLoading(false);

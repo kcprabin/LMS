@@ -2,17 +2,20 @@ import { asyncHandler } from "../utils/asynchandler.js";
 import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt"
 
+
 const registerUser = asyncHandler(async (req, res) => {
-    // 400 means user error here in this code base
+    
 
     
     //Handle user inputs from frontend as objects 
     const {studentemail , Password} = req.body
+    console.log(studentemail)
+    console.log(Password)
 
     // validations of correct format for empty
     if(Object.values({studentemail,Password}).some(data =>String(data)?.trim()=="" )){
         return res.status(400).json({
-            messege:"Empty feild"
+            message:"Empty feild"
         })
     }
         
@@ -20,86 +23,40 @@ const registerUser = asyncHandler(async (req, res) => {
     // email formatiing check
     const gmailFormat = /^.*@gmail\.com$/;
     if(!gmailFormat.test(studentemail)){
-        res.status(400,"Formating must be in form @gmail.com")
+       return res.status(400).json({
+        message:"not in format"
+       })
     }
 
 
     //checking if already exists 
-     try {
-      
-     const userExists = await User.findOne({
+    const userExists = await User.findOne({
         studentemail})
 
         if(userExists){
-        res.status(400,"already exist")
+        return res.status(409).json({
+        messege:"lode23"
+       })
      }
-        
-     } catch (error) {
-        console.log(error)
+     // hashing password
+     const hashedPass = await bcrypt.hash(Password,10);
  
-     }
-    
-
      // saving data in database 
-    const NewUser = User.create({
-        studentemail,
-        Password
-     })
+    const NewUser =  await User.create({
+        studentemail1:studentemail  ,
+        password1:Password  
+    })
 
-
-      return res.status(100).json({
+    
+    return res.status(201).json({
         messege:"User created",
         user : NewUser
       })
+
+    
+
+      
 });
-
-
-export {registerUser,
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 export default registerUser;

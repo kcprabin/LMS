@@ -3,42 +3,40 @@ import bcrypt from "bcrypt"
 
 //data model for user Students
 const userSchema = new Schema({
-    studentemail:{
+    studentemail1:{
         type:String,
         requrired:true,
         trim:true,
-        index:true,   
+        index:true,  
     },
-    password:{
+    password1:{
         type:String,
         requrired:true,
         trim:true
     }
-   
+    
   
 
 },{timestamps:true})
 
-// password incryption in data base
 
+// password incyption logic dont use next 
 userSchema.pre("save",
-     function (next) {
-        // pass check 
-        if(!this.isModified("password"))  return next();
-
-        // hashes password 
-        this.password =  bcrypt.hash(this.password,10)
-        next();
-        
-    }
+   async function(){
+    if(!this.isModified("password1")) return ;
+    this.password1 = await bcrypt.hash(this.password1,10)
+ 
+   }
 )
-// check password code 
 
+
+
+// check password code 
 userSchema.methods.IsPasswordCorrect = async function (password) {
     return  await bcrypt.compare(password,this.password)
 }
 
-// refresh token baki 
+// refresh token baki
 // access token baki 
 
 export const User = mongoose.model("user",userSchema)
