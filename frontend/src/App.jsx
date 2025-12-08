@@ -14,7 +14,7 @@ function App() {
     <Authcontext>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/admin-dashboard" />}></Route>
+          <Route path="/" element={<Navigate to="/login" />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/admin-dashboard" element={<AdminDashboard />}>
             <Route index element={<div className="text-2xl font-bold">Welcome to Admin Dashboard!</div>} />
