@@ -6,27 +6,32 @@ import Authcontext from './context/authcontext'
 import Register from "./pages/Register";
 
 import Members from "./admin/Members";
-import Books from "./admin/Books";
+import Books from "./admin/AdminBooks";
 import Issued from "./admin/Issused";       
-import ReturnedBooks from "./admin/Returned";
-import NotReturnedBooks from "./admin/NotReturn";
+import ReturnedBooks from "./admin/AdminReturned";
+import NotReturnedBooks from "./admin/AdminNotReturn";
 function App() {
   return (
     <Authcontext>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<Register/>}></Route>
+          <Route path="/" element={<Navigate to="/admin-dashboard" />}></Route>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/create-account" element={<CreateUser/>} />
           <Route path="/admin-dashboard" element={<AdminDashboard />}>
             <Route index element={<div className="text-2xl font-bold">Welcome to Admin Dashboard!</div>} />
               <Route path="members" element={<Members />} />
             <Route path="books" element={<Books />} />
             <Route path="issued" element={<Issued />} />
+          
             <Route path="returned" element={<ReturnedBooks />} />
             <Route path="not-returned" element={<NotReturnedBooks />}/>
           </Route>
-          <Route path="/student-dashboard" element={<StudentDashboard />}></Route>
+          <Route path="/student-dashboard" element={<StudentDashboard />}>
+            <Route path="books" element={<Books />} />
+            <Route path="returned" element={<ReturnedBooks />} />
+            <Route path="not-returned" element={<NotReturnedBooks />}/>
+          </Route>
         </Routes>
       </BrowserRouter>
     </Authcontext>
