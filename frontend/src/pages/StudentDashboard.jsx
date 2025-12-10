@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Studentsidebar from '../componets/dashboard/Studentsidebar'
 import Navbar from '../componets/dashboard/Navbar'
-import Main from '../componets/dashboard/Main'
+import Content from '../componets/dashboard/Content'
 
 const StudentDashboard = () => {
   return (
@@ -10,7 +10,7 @@ const StudentDashboard = () => {
       <div >
         <Navbar/>
         <div>
-          <Main/>
+          <Content/>
         </div>
       </div>
     </div>

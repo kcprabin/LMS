@@ -13,7 +13,7 @@ import StuNotReturn from '../../student/StuNotReturn'
 import StuReturn from '../../student/StuReturn'
 
 
-const Main = () => {
+const Content = () => {
   const location = useLocation();
   const pathname = location.pathname;
   
@@ -46,4 +46,4 @@ const Main = () => {
   return isStudent ? <StuCard /> : <Cards />;
 }
 
-export default Main
+export default Content

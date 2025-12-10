@@ -1,18 +1,18 @@
 import React from 'react'
 import Adminsidebar from '../componets/dashboard/Adminsidebar'
 import Navbar from '../componets/dashboard/Navbar'
-import Main from '../componets/dashboard/Main'
+import Content from '../componets/dashboard/Content'
 
-const AdminDashboard = () => {
+function AdminDashboard() {
   return (
-    <div >
+    <div>
       {/* Sidebar */}
       <Adminsidebar />
-      
+
       {/* Main Content Area */}
       <div>
         <Navbar />
-         <Main />
+        <Content />
       </div>
     </div>
   )
