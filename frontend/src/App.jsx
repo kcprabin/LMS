@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
-import Login from "./pages/Login";
+import Login from "./Pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import StudentDashboard from "./pages/StudentDashboard"
 import Authcontext from './context/authcontext'
@@ -9,7 +9,7 @@ import Books from "./admin/AdminBooks";
 import Issued from "./admin/Issused";       
 import ReturnedBooks from "./admin/AdminReturned";
 import NotReturnedBooks from "./admin/AdminNotReturn";
-import Register from "./pages/Register";
+import Register from "./Pages/Register";
 function App() {
   return (
     <Authcontext>

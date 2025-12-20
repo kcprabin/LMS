@@ -3,36 +3,22 @@ import { User } from "../models/user.model.js";
 
 const registerUser = asyncHandler(async (req, res) => {
   //Handle user inputs from frontend as objects
-  const { studentemail, Password, role, kuid } = req.body;
+  const { studentemail, password, role  } = req.body;
 
-  // validations of correct format for empty
-  if (
-    Object.values({ studentemail, Password, kuid }).some(
-      (data) => String(data)?.trim() == ""
-    )
-  ) {
-    return res.status(400).json({
-      success: false,
-      message: "Empty feild",
-    });
-  }
-
-  // email formatiing check
-  const gmailFormat = /^.*@gmail\.com$/;
-  if (!gmailFormat.test(studentemail)) {
-    return res.status(400).json({
-      success: false,
-      message: "not in format",
-    });
+  if(!studentemail||!password || !role ){
+    return res.status(300).json({
+      message:"empty feild",
+      success:false
+    })
   }
 
   //checking if already exists
-  const userExist = await User.findOne({
-    $or: [{ studentemail: studentemail }, { kuid: kuid }],
-  });
+  const userExist = await User.findOne(
+    { studentemail: studentemail }
+  );
 
   if (userExist) {
-    return res.status(409).json({
+    return res.status(300).json({
       success: false,
       message: "User already exits",
     });
@@ -41,24 +27,23 @@ const registerUser = asyncHandler(async (req, res) => {
   // saving data in database
   const user = await User.create({
     studentemail: studentemail,
-    password: Password,
+    password: password,
     role: role,
-    kuid: kuid,
   });
 
   const userCreated = await User.findById(user._id).select(
     "-password -refreshtoken"
   );
   if (!userCreated) {
-    res.status(401).json({
+     return res.status(300).json({
       success: false,
-      message: "failed to register user",
+      message: "failed to register use1111r",
     });
   }
 
   return res.status(201).json({
     success: true,
-    messege: "User created",
+    message: "User created",
     user: userCreated,
   });
 });
@@ -108,10 +93,11 @@ const loginUser = asyncHandler(async (req, res) => {
     user._id
   );
 
-  console.log(refreshToken)
   const options = {
     httpOnly: true,
     secure: false,
+    sameSite: "lax", // or 'none' with secure: true for cross-site
+  maxAge: 7 * 24 * 60 * 60 * 1000,
   };
 
   return res

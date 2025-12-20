@@ -63,14 +63,14 @@ const Register = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/users/register', {
+      const response = await axios.post('http://localhost:8000/api/v1/library/register', {
         studentemail: formData.email,
-        Password: formData.password,
+        password: formData.password,
         role: selectedRole
       });
 
 
-      if (response.data.user) {
+      if (response.data.success) {
         navigate('/login', {
           state: { message: 'Registration successful! Please login.' }
         });

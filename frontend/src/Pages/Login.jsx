@@ -22,7 +22,7 @@ const Login = () => {
         email,
         password,
         role: loginType
-      });
+      },{withCredentials: true });
       
       if(response.data.success) {
         login(response.data.user);

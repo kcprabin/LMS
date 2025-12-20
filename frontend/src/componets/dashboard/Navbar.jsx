@@ -20,7 +20,7 @@ const Navbar = () => {
   
   return (
     <div className='flex items-center justify-between h-12 bg-teal-600 px-6 text-white shadow-md'>
-      <p className='pl-69 text-lg font-semibold'>Welcome, {data.length > 0 ? data[0]?.name : 'Admin'}
+      <p className='pl-69 text-lg font-semibold'>Welcome, {data.length > 0 ? data[0]?.name : "Student"}
 </p>
 
       <button 
