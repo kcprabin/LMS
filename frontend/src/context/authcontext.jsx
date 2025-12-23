@@ -12,9 +12,18 @@ export const AuthContext = createContext();
         localStorage.setItem('user', JSON.stringify(userData));
     }
     
-    const logout = () => {
-    // Clear user data
+    const logout = async () => {
+    await axios.post(
+      "http://localhost:8000/api/v1/library/logout",
+      {},
+      { withCredentials: true } // important to send cookies
+    );
+
+   
     setUser(null);
+
+    // Optional: redirect to login page
+    navigate("/login");
     
     // Clear localStorage/sessionStorage
     localStorage.removeItem('token');
