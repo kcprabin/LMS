@@ -1,5 +1,6 @@
 import { asyncHandler } from "../utils/asynchandler.js";
 import { User } from "../models/user.model.js";
+import jwt from "jsonwebtoken";
 
 const registerUser = asyncHandler(async (req, res) => {
   //Handle user inputs from frontend as objects
@@ -142,6 +143,39 @@ const logout = asyncHandler(async (req, res) => {
 
 });
 
+const autoLogin = asyncHandler ( async(req,res)=>{
+  try {
+    const token = req.cookies.accesstokens
+    if(!token){
+      return res.status(400).json({
+        success:false,
+        message:"no tokens"
+      })
+    }
+    const decodedToken = jwt.verify(token , process.env.ACCESS_TOKEN)
+
+
+     const userrole= await User.findById(decodedToken._id)
+     const role = userrole.role
+
+    
+  
+      return res.status(200).json({
+        success:true,
+        message:"valid bearer tokens",
+        role:role
+      })
+    
+  } catch (error) {
+    res.status(400).json({
+      success:false,
+      message:"unable to get cookies login again"
+    })
+    
+  }
+})
+
 export { registerUser,
          loginUser,
-        logout }
+        logout ,
+      autoLogin}
