@@ -9,10 +9,26 @@ function Members() {
     const fetchMembers = async () => {
       try {
         setLoading(true);
-        const res = await fetch("http://localhost:8000/api/v1/library/members");
+        const res = await fetch("http://localhost:8000/api/v1/library/members", {
+          method: "GET",
+          credentials: "include", // send httpOnly cookies
+        });
+
+        if (res.status === 401) {
+          setError("Unauthorized (401). Please login.");
+          // optionally redirect to login
+          // window.location.href = '/login';
+          return;
+        }
+        if (res.status === 403) {
+          setError("Forbidden (403). Insufficient permissions.");
+          return;
+        }
+
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
-        if (data && data.user) setMembers(data.user);
+        if (data && data.users) setMembers(data.users);
+        else if (data && data.user) setMembers(data.user);
         else setError("Unexpected response format");
       } catch (err) {
         setError(err.message || "Failed to fetch members");
