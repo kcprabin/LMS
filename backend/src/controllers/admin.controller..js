@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asynchandler.js";
 import { Book } from "../models/book.model.js";
 import { cloudinaryUploader } from "../services/cloudinary.service.js";
 import { User } from "../models/user.model.js";
+import { Issue} from "../models/issue.model.js";
 
 
 const registerBook = asyncHandler(async (req, res) => {
@@ -102,6 +103,66 @@ const getBooks = asyncHandler(
   }
 )
 
+const issues = asyncHandler(
+  async(req,res)=>{
+
+    const {studentemail , problem } = req.body
+
+    if(!studentemail || problem ){
+      return res.status(400).json({
+        success:false,
+        message:"empty string"
+      })
+    }
+
+    const checkUser = await User.findOne({
+      studentemail
+    })
+
+    if(!checkUser){
+      return res.status(400).json({
+        success:false,
+        message:"Only registered user can give issue"
+      })
+    }
+
+    const Issue = Issue.create({
+      problem:problem
+    })
+
+    if(!Issue){
+       return res.status(400).json({
+        success:false,
+        message:"unable to create entry error"
+      })
+    }
+
+    return res.status(201).json({
+      success:true,
+      issue:Issue
+    })
+
+  }
+)
+
+const issueForAdmin = asyncHandler(
+  async(req, res)=>{
+    const problem = await Issue.find()
+
+    if(!problem){
+      return res.status(201).json({
+        message:"no problem"
+      })
+    }
+
+    return res.status(201).json({
+      issue:problem
+    })
 
 
-export { registerBook,getMembers, getBooks };
+  }
+)
+
+
+
+export { registerBook,getMembers, getBooks, issues, issueForAdmin };
