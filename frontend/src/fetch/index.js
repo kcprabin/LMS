@@ -1,5 +1,24 @@
 const API_BASE_URL = 'http://localhost:8000/api/v1/library';
 
+
+// yo api to write probel form banuna parxha 
+//http://localhost:8000/api/v1/library/writeproblem
+
+// yo api to get problem display 
+//http://localhost:8000/api/v1/library/problem
+
+
+// yo api to borrow book
+//http://localhost:8000/api/v1/library/borrowbook
+
+
+// yo api to get booktaken by user
+//http://localhost:8000/api/v1/library/seebook
+
+
+// aru ta sab mailai sakisake user this api to fetch result and also put data in database
+
+
 export const getMembers = async() => {
 
     try{

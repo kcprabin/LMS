@@ -105,9 +105,7 @@ const getBooks = asyncHandler(
 
 const issues = asyncHandler(
   async(req,res)=>{
-    adminid = req.user
-    console.log(adminid)
-
+    
     const { problem } = req.body
 
     if(!problem ){
