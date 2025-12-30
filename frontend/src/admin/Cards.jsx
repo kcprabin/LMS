@@ -5,22 +5,24 @@ import { NavLink } from 'react-router-dom'
 const Cards = () => {
   return(
    <div>
-    <div className="pl-69">
-      <h1 className="text-2xl font-bold text-gray-800 mb-8">Dashboard Overview</h1>
+    <div className="pl-4 md:pl-0">
+      <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">Dashboard Overview</h1>
+      <p className="text-gray-200 mb-8 drop-shadow-md">Welcome back, Admin. Here's what's happening today.</p>
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
 
         {/* Members Card */}
          <NavLink 
        to={"Members"}>
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+        <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl shadow-2xl p-6 text-white transform hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-opacity-90 border border-blue-400 border-opacity-30">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-blue-100 text-sm font-medium mb-2">Total Members</p>
-              <p className="text-5xl font-bold">128</p>
+              <p className="text-blue-200 text-sm font-semibold mb-2 uppercase tracking-wide">Total Members</p>
+              <p className="text-5xl font-bold drop-shadow-lg">128</p>
             </div>
-             <div className="p-4 rounded-full">
-              <FaUsers className="w-12 h-12"/>
+             <div className="p-4 rounded-full bg-blue-500 bg-opacity-30 backdrop-blur">
+              <FaUsers className="w-12 h-12 text-blue-100"/>
             </div>
           </div>
         </div>
@@ -29,14 +31,14 @@ const Cards = () => {
         {/* Books Card */}
         <NavLink 
         to={"books"}>
-        <div className="bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200" >
+        <div className="bg-gradient-to-br from-teal-600 to-teal-800 rounded-xl shadow-2xl p-6 text-white transform hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-opacity-90 border border-teal-400 border-opacity-30" >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-teal-100 text-sm font-medium mb-2">Total Books</p>
-              <p className="text-5xl font-bold">245</p>
+              <p className="text-teal-200 text-sm font-semibold mb-2 uppercase tracking-wide">Total Books</p>
+              <p className="text-5xl font-bold drop-shadow-lg">245</p>
             </div>
-            <div className="p-4 rounded-full">
-              <FaBook className="w-12 h-12"/>
+            <div className="p-4 rounded-full bg-teal-500 bg-opacity-30 backdrop-blur">
+              <FaBook className="w-12 h-12 text-teal-100"/>
             </div>
           </div>
         </div>
@@ -47,15 +49,15 @@ const Cards = () => {
 
         {/* Issued Books Card */}
         <NavLink to={"issued"}>
-        <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+        <div className="bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-xl shadow-2xl p-6 text-white transform hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-opacity-90 border border-yellow-400 border-opacity-30">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-yellow-100 text-sm font-medium mb-2">Books Issued</p>
-              <p className="text-5xl font-bold">42</p>
+              <p className="text-yellow-200 text-sm font-semibold mb-2 uppercase tracking-wide">Books Issued</p>
+              <p className="text-5xl font-bold drop-shadow-lg">42</p>
 
             </div>
-             <div className="p-4 rounded-full">
-              <FaHandshake className="w-12 h-12"/>
+             <div className="p-4 rounded-full bg-yellow-500 bg-opacity-30 backdrop-blur">
+              <FaHandshake className="w-12 h-12 text-yellow-100"/>
             </div>
           </div>
         </div>
@@ -63,15 +65,15 @@ const Cards = () => {
 
         {/* Returned Books Card */}
         <NavLink to={"returned"}>
-        <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+        <div className="bg-gradient-to-br from-green-600 to-green-800 rounded-xl shadow-2xl p-6 text-white transform hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-opacity-90 border border-green-400 border-opacity-30">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-green-100 text-sm font-medium mb-2">Books Returned</p>
-              <p className="text-5xl font-bold">189</p>
+              <p className="text-green-200 text-sm font-semibold mb-2 uppercase tracking-wide">Books Returned</p>
+              <p className="text-5xl font-bold drop-shadow-lg">189</p>
             
             </div>
-             <div className="p-4 rounded-full">
-              <FaUndoAlt className="w-12 h-12"/>
+             <div className="p-4 rounded-full bg-green-500 bg-opacity-30 backdrop-blur">
+              <FaUndoAlt className="w-12 h-12 text-green-100"/>
             </div>
           </div>
         </div>
@@ -79,15 +81,15 @@ const Cards = () => {
 
         {/* Overdue Books Card */}
         <NavLink to={"not-returned"}>
-        <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-lg shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200">
+        <div className="bg-gradient-to-br from-red-600 to-red-800 rounded-xl shadow-2xl p-6 text-white transform hover:scale-105 transition-all duration-300 backdrop-blur-sm bg-opacity-90 border border-red-400 border-opacity-30">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-red-100 text-sm font-medium mb-2">Books Not Returned</p>
-              <p className="text-5xl font-bold">7</p>
+              <p className="text-red-200 text-sm font-semibold mb-2 uppercase tracking-wide">Books Not Returned</p>
+              <p className="text-5xl font-bold drop-shadow-lg">7</p>
               
             </div>
-           <div className="p-4 rounded-full">
-              <FaExclamationTriangle className="w-12 h-12"/>
+           <div className="p-4 rounded-full bg-red-500 bg-opacity-30 backdrop-blur">
+              <FaExclamationTriangle className="w-12 h-12 text-red-100"/>
             </div>
           </div>
         </div>

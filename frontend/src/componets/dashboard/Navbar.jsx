@@ -27,20 +27,23 @@ const Navbar = ({ toggleSidebar }) => {
   };
 
   return (
-    <div className='flex items-center justify-between h-16 bg-teal-600 px-4 lg:px-6 text-white shadow-md'>
+    <div className='flex items-center justify-between h-20 px-4 lg:px-6 text-white shadow-2xl relative z-20 backdrop-blur-md bg-black bg-opacity-40 border-b border-white border-opacity-10'>
       <div className="flex items-center gap-4">
         <button 
           onClick={toggleSidebar}
-          className="lg:hidden text-white hover:text-gray-200 transition-colors"
+          className="lg:hidden text-white hover:text-gray-300 transition-colors hover:bg-white hover:bg-opacity-10 p-2 rounded-lg"
         >
           <FaBars className="w-6 h-6" />
         </button>
-        <p className='text-lg font-semibold'>Welcome, {userName}</p>
+        <div>
+          <p className='text-sm text-gray-300'>Welcome back</p>
+          <p className='text-lg font-bold drop-shadow-lg'>{userName}</p>
+        </div>
       </div>
 
       <button 
         onClick={handleLogout}
-        className='bg-teal-700 hover:bg-teal-800 px-4 py-2 rounded-md transition-colors duration-200 font-medium'
+        className='bg-red-600 hover:bg-red-700 px-6 py-2.5 rounded-lg transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105'
       >
         Logout
       </button>
