@@ -92,10 +92,10 @@ function AdminBooks() {
       <div className="mb-4 text-white">
           <input
             type="text"
-            placeholder="Search books by title or author..."
+            placeholder ="Search books by title or author..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2         focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2         focus:ring-blue-500 "
           />
         </div>
 
