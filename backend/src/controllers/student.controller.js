@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asynchandler.js";
 import { Book } from "../models/book.model.js";
 import { BooksIssue } from "../models/bookissue.model.js";
 
-const getBooks = asyncHandler(async (req, res) => {
+export const getBooks = asyncHandler(async (req, res) => {
   try {
     const books = await Book.find();
 
@@ -14,7 +14,7 @@ const getBooks = asyncHandler(async (req, res) => {
   }
 });
 
-const bookBorrow = asyncHandler(async (req, res) => {
+export const bookBorrow = asyncHandler(async (req, res) => {
   const student = req.user;
   console.log(student);
 
@@ -61,7 +61,7 @@ const bookBorrow = asyncHandler(async (req, res) => {
   });
 });
 
-const bookTaken  = asyncHandler(
+export const bookTaken  = asyncHandler(
   async(req,res)=>{
     const booktaken = await BooksIssue.find({ 
     user: req.user._id,
@@ -74,4 +74,40 @@ const bookTaken  = asyncHandler(
     })
   }
 )
-export { getBooks, bookBorrow ,bookTaken};
+
+
+
+export const returnBook = asyncHandler(async (req, res) => {
+  const { issueId } = req.body;
+
+  if (!issueId) {
+    return res.status(400).json({
+      success: false,
+      message: "Issue ID is required"
+    });
+  }
+
+  const updatedIssue = await BooksIssue.findByIdAndUpdate(
+    issueId,
+    {
+      $set: {
+        status: "RETURNED",
+        returnedAt: new Date()
+      }
+    },
+    { new: true }
+  );
+
+  if (!updatedIssue) {
+    return res.status(404).json({
+      success: false,
+      message: "Issue record not found"
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    message: "Book returned successfully",
+    data: updatedIssue
+  });
+});
