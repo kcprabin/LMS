@@ -1,161 +1,118 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {  FaTachometerAlt,  FaUsers,  FaBook, FaHandshake, FaUndoAlt,  FaExclamationTriangle,FaTimes} from 'react-icons/fa';
-
-
+import { FaTachometerAlt, FaUsers, FaBook, FaHandshake, FaUndoAlt, FaExclamationTriangle, FaTimes } from 'react-icons/fa';
 
 const Adminsidebar = ({ isOpen, setIsOpen }) => {
+  const menuItems = [
+    { path: '/admin-dashboard', icon: FaTachometerAlt, label: 'Dashboard', end: true },
+    { path: '/admin-dashboard/members', icon: FaUsers, label: 'Members' },
+    { path: '/admin-dashboard/books', icon: FaBook, label: 'Books' },
+    { path: '/admin-dashboard/issued', icon: FaHandshake, label: 'Issued Books' },
+    { path: '/admin-dashboard/returned', icon: FaUndoAlt, label: 'Returned' },
+    { path: '/admin-dashboard/not-returned', icon: FaExclamationTriangle, label: 'Overdue' }
+  ];
+
   return (
     <>
       {/* Mobile Overlay */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden transition-opacity"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden transition-opacity"
           onClick={() => setIsOpen(false)}
         />
       )}
       
       {/* Sidebar */}
       <aside className={`
-        fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 shadow-sm z-50 
-        transform transition-transform duration-300 ease-in-out
+        fixed left-0 top-0 h-screen w-[280px] bg-white z-50 
+        transform transition-all duration-300 ease-in-out
+        shadow-[4px_0_24px_rgba(0,0,0,0.08)]
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         
-        {/* HEADER: Logo Section */}
-        <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200">
-          <div className="flex items-center gap-2">
-            {/* Logo */}
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
-              <FaBook className="w-4 h-4 text-white" />
+        {/* Header */}
+        <div className="flex items-center justify-between h-20 px-6 border-b border-gray-100">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
+              <FaBook className="w-5 h-5 text-white" />
             </div>
-            
-            {/* Brand Name */}
             <div>
-              <h3 className="text-lg font-bold text-gray-800">Yr Library</h3>
+              <h3 className="text-xl font-bold text-gray-900">LibraryOS</h3>
+              <p className="text-xs text-gray-500">Admin Panel</p>
             </div>
           </div>
 
-          {/* Mobile Close Button */}
           <button 
             onClick={() => setIsOpen(false)}
-            className="lg:hidden p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            className="lg:hidden p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all"
             aria-label="Close sidebar"
           >
             <FaTimes className="w-5 h-5" />
           </button>
         </div>
 
-        {/* NAVIGATION MENU */}
-        <nav className="flex-1 overflow-y-auto py-6 px-3">
-          <div className="space-y-1">
-            
-            {/* Dashboard */}
-            <NavLink 
-              to="/admin-dashboard" 
-              end
-              onClick={() => setIsOpen(false)}
-              className={({isActive}) => `
-                flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all
-                ${isActive 
-                  ? "bg-purple-50 text-purple-700 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50"
-                }
-              `}
-            >
-              <FaTachometerAlt className="w-5 h-5 flex-shrink-0" />
-              <span>Dashboard</span>
-            </NavLink>
-            
-            {/* Members */}
-            <NavLink 
-              to="/admin-dashboard/members" 
-              onClick={() => setIsOpen(false)}
-              className={({isActive}) => `
-                flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all
-                ${isActive 
-                  ? "bg-purple-50 text-purple-700 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50"
-                }
-              `}
-            >
-              <FaUsers className="w-5 h-5 flex-shrink-0" />
-              <span>Members</span>
-            </NavLink>
-            
-            {/* Books */}
-            <NavLink 
-              to="/admin-dashboard/books" 
-              onClick={() => setIsOpen(false)}
-              className={({isActive}) => `
-                flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all
-                ${isActive 
-                  ? "bg-purple-50 text-purple-700 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50"
-                }
-              `}
-            >
-              <FaBook className="w-5 h-5 flex-shrink-0" />
-              <span>Books</span>
-            </NavLink>
-            
-            {/* Issues */}
-            <NavLink 
-              to="/admin-dashboard/issued" 
-              onClick={() => setIsOpen(false)}
-              className={({isActive}) => `
-                flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all
-                ${isActive 
-                  ? "bg-purple-50 text-purple-700 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50"
-                }
-              `}
-            >
-              <FaHandshake className="w-5 h-5 flex-shrink-0" />
-              <span>Issues</span>
-            </NavLink>
-            
-            {/* Returned */}
-            <NavLink 
-              to="/admin-dashboard/returned" 
-              onClick={() => setIsOpen(false)}
-              className={({isActive}) => `
-                flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all
-                ${isActive 
-                  ? "bg-purple-50 text-purple-700 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50"
-                }
-              `}
-            >
-              <FaUndoAlt className="w-5 h-5 flex-shrink-0" />
-              <span>Returned</span>
-            </NavLink>
-            
-            {/* Not Returned */}
-            <NavLink 
-              to="/admin-dashboard/not-returned" 
-              onClick={() => setIsOpen(false)}
-              className={({isActive}) => `
-                flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all
-                ${isActive 
-                  ? "bg-purple-50 text-purple-700 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50"
-                }
-              `}
-            >
-              <FaExclamationTriangle className="w-5 h-5 flex-shrink-0" />
-              <span>Not Returned</span>
-            </NavLink>
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto py-6 px-4">
+          <div className="space-y-1.5">
+            {menuItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <NavLink 
+                  key={item.path}
+                  to={item.path}
+                  end={item.end}
+                  onClick={() => setIsOpen(false)}
+                  className={({isActive}) => `
+                    group flex items-center gap-3 px-4 py-3.5 rounded-xl font-medium text-sm
+                    transition-all duration-200 relative overflow-hidden
+                    ${isActive 
+                      ? "bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 shadow-sm" 
+                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    }
+                  `}
+                >
+                  {({isActive}) => (
+                    <>
+                      {isActive && (
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 to-purple-500 rounded-r-full" />
+                      )}
+                      <div className={`
+                        w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0
+                        transition-all duration-200
+                        ${isActive 
+                          ? "bg-white shadow-sm" 
+                          : "bg-gray-100 group-hover:bg-white group-hover:shadow-sm"
+                        }
+                      `}>
+                        <Icon className={`w-5 h-5 ${isActive ? "text-indigo-600" : "text-gray-500 group-hover:text-gray-700"}`} />
+                      </div>
+                      <span className="font-semibold">{item.label}</span>
+                    </>
+                  )}
+                </NavLink>
+              );
+            })}
           </div>
         </nav>
 
-        <div className="border-t border-gray-200 p-4">
-          <div className="bg-purple-50 rounded-lg p-3">
-            <p className="text-xs font-semibold text-purple-900 mb-1">Need Help?</p>
-            <p className="text-xs text-purple-700 mb-2">Check our documentation</p>
-            <button className="text-xs font-medium text-purple-600 hover:text-purple-700">
-              Learn More →
-            </button>
+        {/* Bottom Upgrade Card */}
+        <div className="p-4 border-t border-gray-100">
+          <div className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-2xl p-5 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12" />
+            
+            <div className="relative z-10">
+              <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center mb-3">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h4 className="font-bold text-sm mb-1">Upgrade to Pro</h4>
+              <p className="text-xs text-white/80 mb-3">Get unlimited access</p>
+              <button className="w-full bg-white text-indigo-600 font-semibold text-xs py-2.5 px-4 rounded-lg hover:bg-white/90 transition-all shadow-lg">
+                Upgrade Now
+              </button>
+            </div>
           </div>
         </div>
       </aside>
@@ -164,4 +121,3 @@ const Adminsidebar = ({ isOpen, setIsOpen }) => {
 };
 
 export default Adminsidebar;
-

@@ -120,16 +120,16 @@ const Issue = () => {
               >
                 {/* Image */}
                 <div className="h-48 bg-gray-100 flex items-center justify-center overflow-hidden rounded-t-xl">
-                  {issue.book?.image ? (
-                    <img
-                      src={issue.book.image}
-                      alt={issue.book.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <FaBook className="w-16 h-16 text-gray-300" />
-                  )}
-                </div>
+                {issue.book?.image ? (
+                  <img
+                    src={issue.book.image} // This will now work because of .populate()
+                    alt={issue.book.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <FaBook className="w-16 h-16 text-gray-300" />
+                )}
+</div>
 
                 {/* Content */}
                 <div className="p-4">
