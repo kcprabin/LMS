@@ -3,14 +3,14 @@ import {
   FaBook,FaSpinner,FaCalendarAlt,FaExclamationTriangle} from "react-icons/fa";
 import toast from "react-hot-toast";
 import ConfirmModal from "../componets/common/ConfirmModal";
-import { getIssuedBooks } from "../fetch";
+import { getIssuedBooks,returnBookApi } from "../fetch";
 
 const Issue = () => {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
-  const [returning, serReturning] = useState(false);
+  const [returning, setReturning] = useState(false);
 
   const fetchBorrowedBooks = async () => {
     try {
@@ -44,20 +44,29 @@ const Issue = () => {
     return dueDate.toLocaleDateString();
   };
 
-  const handleReturnBook = async () => {
-    if (!selectedBook) return;
 
-    try {
-      serReturning(true);
+
+const handleReturnBook = async () => {
+  if (!selectedBook) return;
+
+  try {
+    setReturning(true);
+    
+    
+    const response = await returnBookApi(selectedBook._id);
+    
+    if (response.success) {
       toast.success("Book returned successfully!");
       setSelectedBook(null);
-      fetchBorrowedBooks();
-    } catch (err) {
-      toast.error(err.message || "Failed to return book");
-    } finally {
-      serReturning(false);
+      
+      fetchBorrowedBooks(); 
     }
-  };
+  } catch (err) {
+    toast.error(err.message || "Failed to return book");
+  } finally {
+    setReturning(false);
+  }
+};
 
   if (loading) {
     return (

@@ -109,4 +109,27 @@ export const borrowBook = async (bookId) => {
     throw error;
   }
 };
+
+export const returnBookApi = async (issueId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/returnbook`, {
+      method: "POST",
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ issueId })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to return book');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error returning book:', error);
+    throw error;
+  }
+};
 {/*write a function to fetch any thing in the frontend here and then call the function in the respective file */}

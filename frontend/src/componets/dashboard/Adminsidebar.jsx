@@ -37,7 +37,7 @@ const Adminsidebar = ({ isOpen, setIsOpen }) => {
               <FaBook className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-gray-900">LibraryOS</h3>
+              <h3 className="text-xl font-bold text-gray-900">Yr Library</h3>
               <p className="text-xs text-gray-500">Admin Panel</p>
             </div>
           </div>
@@ -95,26 +95,8 @@ const Adminsidebar = ({ isOpen, setIsOpen }) => {
           </div>
         </nav>
 
-        {/* Bottom Upgrade Card */}
-        <div className="p-4 border-t border-gray-100">
-          <div className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-2xl p-5 text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16" />
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12" />
-            
-            <div className="relative z-10">
-              <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center mb-3">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h4 className="font-bold text-sm mb-1">Upgrade to Pro</h4>
-              <p className="text-xs text-white/80 mb-3">Get unlimited access</p>
-              <button className="w-full bg-white text-indigo-600 font-semibold text-xs py-2.5 px-4 rounded-lg hover:bg-white/90 transition-all shadow-lg">
-                Upgrade Now
-              </button>
-            </div>
-          </div>
-        </div>
+        
+        
       </aside>
     </>
   );
