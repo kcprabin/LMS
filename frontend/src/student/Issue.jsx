@@ -131,7 +131,7 @@ const handleReturnBook = async () => {
                 <div className="h-48 bg-gray-100 flex items-center justify-center overflow-hidden rounded-t-xl">
                 {issue.book?.image ? (
                   <img
-                    src={issue.book.image} // This will now work because of .populate()
+                    src={issue.book.image} 
                     alt={issue.book.title}
                     className="w-full h-full object-cover"
                   />

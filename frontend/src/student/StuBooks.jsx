@@ -86,8 +86,8 @@ function StuBooks() {
         </p>
 
       
-        <div className="mt-4 max-w relative text-white">
-          <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-white" />
+        <div className="mt-4 max-w relative text-black">
+          <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-black" />
           <input
             type="text"
             placeholder="Search by title, author, or publication..."
