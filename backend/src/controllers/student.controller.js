@@ -74,9 +74,6 @@ export const bookTaken  = asyncHandler(
     })
   }
 )
-
-
-
 export const returnBook = asyncHandler(async (req, res) => {
   const { issueId } = req.body;
 

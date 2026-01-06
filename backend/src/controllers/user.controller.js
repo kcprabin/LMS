@@ -3,7 +3,7 @@ import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 
 const registerUser = asyncHandler(async (req, res) => {
-  //Handle user inputs from frontend as objects
+
   const { studentemail, password, userName ,role  } = req.body;
 
   if(!studentemail||!password || !userName || !role ){
