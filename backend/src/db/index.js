@@ -9,6 +9,7 @@ const dataBase = async () => {
         console.log("Failed connection with Database", error);
         process.exit(1);
     }
+   
 };
 
 export default dataBase;

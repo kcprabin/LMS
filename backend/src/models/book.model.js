@@ -1,6 +1,5 @@
 import mongoose, {Schema} from "mongoose";
 
-// book scheema 
 const bookSchema = new Schema({
     title:{
         type:String,
@@ -25,6 +24,10 @@ const bookSchema = new Schema({
     description:{
         type:String,
         required:true
+    },
+    history:{
+        type:Array,
+        default:[]
     }
 },{timestamps:true})
 

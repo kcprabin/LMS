@@ -27,6 +27,7 @@ const userSchema = new Schema(
     },
     refreshtoken: {
       type: String,
+      default: "",
     },
   },
   { timestamps: true }

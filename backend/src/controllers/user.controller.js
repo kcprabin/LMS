@@ -3,20 +3,17 @@ import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 
 const registerUser = asyncHandler(async (req, res) => {
+  const { studentemail, password, userName, role } = req.body;
 
-  const { studentemail, password, userName ,role  } = req.body;
-
-  if(!studentemail||!password || !userName || !role ){
+  if (!studentemail || !password || !userName || !role) {
     return res.status(300).json({
-      message:"empty feild",
-      success:false
-    })
+      message: "empty feild",
+      success: false,
+    });
   }
 
   //checking if already exists
-  const userExist = await User.findOne(
-    { studentemail: studentemail }
-  );
+  const userExist = await User.findOne({ studentemail: studentemail });
 
   if (userExist) {
     return res.status(300).json({
@@ -26,9 +23,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   //checking if UsernameTaken or not
-  const TakenName = await User.findOne(
-    { userName: userName }
-  );
+  const TakenName = await User.findOne({ userName: userName });
 
   if (TakenName) {
     return res.status(300).json({
@@ -49,7 +44,7 @@ const registerUser = asyncHandler(async (req, res) => {
     "-password -refreshtoken"
   );
   if (!userCreated) {
-     return res.status(300).json({
+    return res.status(300).json({
       success: false,
       message: "failed to register use1111r",
     });
@@ -76,7 +71,7 @@ const generateRefreshTokenAndAccesToken = async (userid) => {
 };
 
 const loginUser = asyncHandler(async (req, res) => {
-  const { email, password , role } = req.body;
+  const { email, password, role } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({
@@ -87,11 +82,11 @@ const loginUser = asyncHandler(async (req, res) => {
 
   // check user and role
   const user = await User.findOne({
-    $and: [{ studentemail:email }, { role }],
+    $and: [{ studentemail: email }, { role }],
   });
 
   if (!user) {
-     return res.status(400).json({
+    return res.status(400).json({
       message: "Not activates user",
     });
   }
@@ -125,56 +120,59 @@ const loginUser = asyncHandler(async (req, res) => {
         id: user._id,
         name: user.userName,
         email: user.email,
-        role: user.role,}
-})
+        role: user.role,
+      },
+    });
 });
 
 const logout = asyncHandler(async (req, res) => {
-    await User.findByIdAndUpdate(req.user._id,
-        {
-            $set:{
-                refreshtoken:null
-            }
-        },
-        {new:true}
-    )
+  await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: {
+        refreshtoken: null,
+      },
+    },
+    { new: true }
+  );
 
-     const options = {
+  const options = {
     httpOnly: true,
     secure: false,
   };
 
-    res.status(201)
-    .clearCookie("accesstokens",options)
-    .clearCookie("refreshtokens",options)
+  res
+    .status(201)
+    .clearCookie("accesstokens", options)
+    .clearCookie("refreshtokens", options)
     .json({
-        message:"logout sucessfull",
-        success:true
-    })
-
-
-
+      message: "logout sucessfull",
+      success: true,
+    });
 });
 
 const autoLogin = asyncHandler(async (req, res) => {
   try {
     const token = req.cookies.accesstokens;
     if (!token) {
-      return res.status(401).json({ // Use 401 for unauthorized
+      return res.status(401).json({
+        // Use 401 for unauthorized
         success: false,
-        message: "No token found"
+        message: "No token found",
       });
     }
 
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
 
     // Fetch the full user object to get the name and role
-    const user = await User.findById(decodedToken._id).select("-password -refreshtoken");
+    const user = await User.findById(decodedToken._id).select(
+      "-password -refreshtoken"
+    );
 
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: "User not found"
+        message: "User not found",
       });
     }
 
@@ -185,19 +183,25 @@ const autoLogin = asyncHandler(async (req, res) => {
       user: {
         name: user.userName,
         role: user.role,
-        email: user.studentemail
-      }
+        email: user.studentemail,
+      },
     });
-
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: "Session expired, please login again"
+      message: "Session expired, please login again",
     });
   }
 });
 
-export { registerUser,
-         loginUser,
-        logout ,
-      autoLogin}
+const getProfile = asyncHandler(async (req, res) => {});
+const updateProfile = asyncHandler(async (req, res) => {});
+
+export {
+  registerUser,
+  loginUser,
+  logout,
+  autoLogin,
+  getProfile,
+  updateProfile,
+};
