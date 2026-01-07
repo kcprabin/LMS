@@ -317,7 +317,7 @@ This project is open source. A specific license (for example, MIT) can be added 
 - Author: Prabin K.C.
 - GitHub: https://github.com/kcprabin
 - LinkedIn: https://www.linkedin.com/in/prabin-k-c-36159036b/
-- Email: your.email@example.com (replace with the maintainer’s actual email address)
+- Email: kcprabin2063@gmail.com
 
 If you are using or extending this project, feel free to reach out or share your work.
 
