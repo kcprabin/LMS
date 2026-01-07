@@ -4,6 +4,7 @@ import Login from "./Pages/Login";
 import AdminDashboard from "./Pages/AdminDashboard";
 import StudentDashboard from "./Pages/StudentDashboard";
 import Authcontext from './context/authcontext';
+import ProtectedRoute from './componets/common/ProtectedRoute';
 
 
 import Cards from "./admin/Cards";
@@ -29,9 +30,9 @@ function App() {
             <Route path="/" element={<Navigate to="/login" />}></Route>
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Register/>}/>
-            <Route path="new-book" element={<NewBook />} />
+            <Route path="new-book" element={<ProtectedRoute requiredRole="admin"><NewBook /></ProtectedRoute>} />
 
-            <Route path="/admin-dashboard" element={<AdminDashboard />}>
+            <Route path="/admin-dashboard" element={<ProtectedRoute requiredRole="admin"><AdminDashboard /></ProtectedRoute>}>
               <Route index element={<Cards />} />
               <Route path="members" element={<Members />} />
               <Route path="books" element={<Books />} />
@@ -40,7 +41,7 @@ function App() {
               <Route path="not-returned" element={<NotReturnedBooks />}/>
             </Route>
 
-            <Route path="/student-dashboard" element={<StudentDashboard />}>
+            <Route path="/student-dashboard" element={<ProtectedRoute requiredRole="student"><StudentDashboard /></ProtectedRoute>}>
               <Route index element={<StuCards />} />
               <Route path="books" element={<StuBooks />} />
               <Route path="returned" element={<StuReturn />} />

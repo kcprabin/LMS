@@ -194,8 +194,52 @@ const autoLogin = asyncHandler(async (req, res) => {
   }
 });
 
-const getProfile = asyncHandler(async (req, res) => {});
-const updateProfile = asyncHandler(async (req, res) => {});
+const getProfile = asyncHandler(async (req, res) => {
+  const user = req.user
+  res.status(200).json({
+    success: true,
+    user: { 
+      name: user.userName,
+      email: user.studentemail,
+      role: user.role,
+      createdate: user.createdAt
+    },
+  });
+})
+  
+const updateProfile = asyncHandler(async (req, res) => {
+  const user = req.user._id;
+  if (!user) {
+    return res.status(400).json({
+      success: false,
+      message: "User not found",
+    });}
+
+  const { userName, password } = req.body;
+  if(!userName && !password){
+    return res.status(400).json({
+      success: false,
+      message: "No data to update",
+    }); 
+  }
+
+  const isPasswordCorrect = await user.IsPasswordCorrect(password);
+  if(!isPasswordCorrect){
+    return res.status(400).json({
+      success: false,
+      message: "Incorrect password",
+    });   
+  }
+
+  user.userName = userName || user.userName;
+  user.password = password || user.password;
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Profile updated successfully",
+  }); 
+});
 
 export {
   registerUser,

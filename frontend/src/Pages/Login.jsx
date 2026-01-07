@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/authcontext';
 
-// Set axios defaults outside component
 axios.defaults.withCredentials = true;
 
 const Login = () => {

@@ -20,7 +20,6 @@ const userSchema = new Schema(
       required:true,
       trim:true,
     },
-   
     role: {
       type: String,
       required: true,
@@ -33,7 +32,7 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-// password incyption logic dont use next
+
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);

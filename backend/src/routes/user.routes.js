@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {registerUser,loginUser,logout,autoLogin} from "../controllers/user.controller.js";
+import {registerUser,loginUser,logout,autoLogin,getProfile,updateProfile} from "../controllers/user.controller.js";
 import { loginInCheck } from "../middleware/auth.middleware.js";
 
 
@@ -11,6 +11,8 @@ router.route("/register").post(registerUser)
 router.route("/login").post(loginUser)
 router.route("/logout").post( loginInCheck ,logout)
 router.route("/rememberme").get(autoLogin)
+router.route("/profile").get( loginInCheck ,getProfile) 
+router.route("/updateprofile").put( loginInCheck ,updateProfile)
 
 
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { FaSearch, FaUserCircle, FaTrash, FaSpinner, FaFilter, FaUserPlus, FaDownload } from "react-icons/fa";
 
 function Members() {
@@ -8,6 +9,7 @@ function Members() {
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [showMobileCards, setShowMobileCards] = useState(window.innerWidth < 768);
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchMembers();
@@ -19,6 +21,11 @@ function Members() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const addMember = ()=>{
+    navigate("/register")
+  }
+
+ 
   const fetchMembers = async () => {
     try {
       setLoading(true);
@@ -56,9 +63,10 @@ function Members() {
 
     try {
       const res = await fetch(
-        `http://localhost:8000/api/v1/library/members/${id}`,
+        `http://localhost:8000/api/v1/library/deleteuser/${email}`,
         { method: "DELETE", credentials: "include" }
       );
+      console.log(email)
 
       if (!res.ok) throw new Error("Failed to delete member");
       
@@ -134,7 +142,7 @@ function Members() {
             <FaDownload className="w-4 h-4" />
             Export
           </button>
-          <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all shadow-sm">
+          <button onClick={addMember} className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all shadow-sm">
             <FaUserPlus className="w-4 h-4" />
             Add Member
           </button>

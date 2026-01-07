@@ -24,10 +24,6 @@ const bookSchema = new Schema({
     description:{
         type:String,
         required:true
-    },
-    history:{
-        type:Array,
-        default:[]
     }
 },{timestamps:true})
 
