@@ -312,12 +312,25 @@ You can also open issues for bug reports, questions, or feature suggestions.
 
 This project is open source. A specific license (for example, MIT) can be added to this repository to formalize usage and contribution terms. Until then, please treat it as a community project intended for learning, experimentation, and extension.
 
-## Author & Contact
 
-- Author: Prabin K.C.
-- GitHub: https://github.com/kcprabin
-- LinkedIn: https://www.linkedin.com/in/prabin-k-c-36159036b/
-- Email: your.email@example.com (replace with the maintainer’s actual email address)
+
+- ## Author & Contact
+
+### Original Author
+- **Name:** Prabin K.C.
+- **GitHub:** https://github.com/kcprabin
+- **LinkedIn:** https://www.linkedin.com/in/prabin-k-c-36159036b/
+
+### Co-Author / Maintainer
+- **Name:** Ayush Adhikari
+- **GitHub:** https://github.com/AayushAdhikari30
+- **Email:** aayush.adhikari.9464@gmail.com
+- **LinkedIn:** www.linkedin.com/in/aayush-adhikari-811069356
+- **Location:** Nepal
+  
+
+If you are using or extending this project, feel free to reach out or share your work.
+
 
 If you are using or extending this project, feel free to reach out or share your work.
 
