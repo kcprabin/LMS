@@ -8,9 +8,10 @@ export const loginInCheck = asyncHandler(async (req, res, next) => {
     if (req.cookies?.accesstokens) token = req.cookies.accesstokens;
     
     else if (req.header("Authorization")?.startsWith("Bearer ")) {
-      token = req.header("Authorization").split(" ")[1]; // safer than replace
+      token = req.header("Authorization").split(" ")[1]; 
     }
 
+    
     if (!token) {
       return res.status(401).json({
         success: false,
