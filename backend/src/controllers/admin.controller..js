@@ -186,12 +186,14 @@ const deleteBook = asyncHandler(async (req, res) => {
 const editBook = asyncHandler(async (req, res) => {
   const { bookId } = req.params;
   const { title, author, publishedDate, publication, description } = req.body;
+  
+  // Validate required fields
   if (
-    !title?.trim() ||
-    !author?.trim() ||
-    !publishedDate?.trim() ||
-    !publication?.trim() ||
-    !description?.trim()
+    !title?.toString().trim() ||
+    !author?.toString().trim() ||
+    !publishedDate ||
+    !publication?.toString().trim() ||
+    !description?.toString().trim()
   ) {
     return res.status(400).json({
       success: false,
