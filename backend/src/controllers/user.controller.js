@@ -208,37 +208,92 @@ const getProfile = asyncHandler(async (req, res) => {
 })
   
 const updateProfile = asyncHandler(async (req, res) => {
-  const user = req.user._id;
-  if (!user) {
+  const userId = req.user._id;
+  if (!userId) {
     return res.status(400).json({
       success: false,
       message: "User not found",
-    });}
+    });
+  }
 
-  const { userName, password } = req.body;
-  if(!userName && !password){
+  const { userName, studentemail } = req.body;
+  if(!userName && !studentemail){
     return res.status(400).json({
       success: false,
       message: "No data to update",
     }); 
   }
 
-  const isPasswordCorrect = await user.IsPasswordCorrect(password);
-  if(!isPasswordCorrect){
+  const user = await User.findById(userId);
+  if (!user) {
     return res.status(400).json({
       success: false,
-      message: "Incorrect password",
-    });   
+      message: "User not found",
+    });
   }
 
   user.userName = userName || user.userName;
-  user.password = password || user.password;
+  user.studentemail = studentemail || user.studentemail;
   await user.save();
 
   res.status(200).json({
     success: true,
     message: "Profile updated successfully",
+    user: {
+      name: user.userName,
+      email: user.studentemail,
+      role: user.role
+    }
   }); 
+});
+
+const changePassword = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  if (!userId) {
+    return res.status(400).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+  const { currentPassword, newPassword } = req.body;
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({
+      success: false,
+      message: "Current password and new password are required",
+    });
+  }
+
+  if (newPassword.length < 6) {
+    return res.status(400).json({
+      success: false,
+      message: "New password must be at least 6 characters",
+    });
+  }
+
+  const user = await User.findById(userId);
+  if (!user) {
+    return res.status(400).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+  const isPasswordCorrect = await user.IsPasswordCorrect(currentPassword);
+  if (!isPasswordCorrect) {
+    return res.status(400).json({
+      success: false,
+      message: "Current password is incorrect",
+    });
+  }
+
+  user.password = newPassword;
+  await user.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+    message: "Password changed successfully",
+  });
 });
 
 export {
@@ -248,4 +303,5 @@ export {
   autoLogin,
   getProfile,
   updateProfile,
+  changePassword,
 };

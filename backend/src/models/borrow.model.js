@@ -19,6 +19,15 @@ const borrowSchema = new mongoose.Schema({
         type:Date,
         required:true,  
     },
+    returnedAt:{
+        type:Date,
+        default:null
+    },
+    status:{
+        type:String,
+        enum:["ISSUED","RETURNED"],
+        default:"ISSUED"
+    },
     history:{
         type:Array,
         default:[]

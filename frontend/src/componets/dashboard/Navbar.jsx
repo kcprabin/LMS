@@ -10,6 +10,7 @@ const Navbar = ({ toggleSidebar }) => {
   const [email,setEmail] =useState('');
   const [userName, setUserName] = useState();
   const [showProfile, setShowProfile] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
   const fetchUserData = async () => {
@@ -25,7 +26,7 @@ const Navbar = ({ toggleSidebar }) => {
         
         
         if (userData.role === 'admin') {
-          setUserName('Admin');
+          setUserName(userData.name);
         } else {
           setUserName(userData.name);
         }
@@ -106,13 +107,31 @@ const Navbar = ({ toggleSidebar }) => {
                 <p className="text-xs text-gray-500 mt-0.5">{email}</p>
               </div>
               <div className="p-2">
-                <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-all">
+                <button 
+                  onClick={() => {
+                    navigate('/profile-settings');
+                    setShowProfile(false);
+                  }}
+                  className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-all"
+                >
                   Profile Settings
                 </button>
-                <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-all">
+                <button 
+                  onClick={() => {
+                    navigate('/account-settings');
+                    setShowProfile(false);
+                  }}
+                  className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-all"
+                >
                   Account Settings
                 </button>
-                <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-all">
+                <button 
+                  onClick={() => {
+                    navigate('/help-support');
+                    setShowProfile(false);
+                  }}
+                  className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-all"
+                >
                   Help & Support
                 </button>
               </div>

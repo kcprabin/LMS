@@ -16,14 +16,14 @@ const Issused = () => {
   const fetchIssuedBooks = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:8000/api/v1/library/seebook', {
+      const res = await fetch('http://localhost:8000/api/v1/library/issued-books', {
         credentials: 'include'
       });
       
       if (!res.ok) throw new Error('Failed to fetch issued books');
       
       const data = await res.json();
-      const issued = data.books?.filter(book => book.status === 'ISSUED') || [];
+      const issued = data.books || [];
       setIssuedBooks(issued);
     } catch (err) {
       setError(err.message);
@@ -90,7 +90,7 @@ const Issused = () => {
   const filteredBooks = issuedBooks.filter(issue => {
     const matchesSearch = 
       issue.book?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      issue.user?.studentemail?.toLowerCase().includes(searchTerm.toLowerCase());
+      issue.student?.studentemail?.toLowerCase().includes(searchTerm.toLowerCase());
     
     const status = getStatus(issue.issuedAt);
     const matchesFilter = statusFilter === 'all' || status === statusFilter;
@@ -288,7 +288,7 @@ const Issused = () => {
                 <div className="flex items-center gap-2 mb-3 px-3 py-2 bg-white rounded-lg">
                   <FaUser className="w-4 h-4 text-gray-400" />
                   <span className="text-sm text-gray-700 font-medium">
-                    {issue.user?.studentemail || 'Unknown Student'}
+                    {issue.student?.userName || 'Unknown Student'}
                   </span>
                 </div>
 

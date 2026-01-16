@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { getMembers, getBooks, getIssuedBooks } from '../fetch';
 
 export const useDashboardStats = () => {
   const [stats, setStats] = useState({
@@ -18,28 +17,20 @@ export const useDashboardStats = () => {
         setLoading(true);
         setError(null);
 
-       
-        const [membersData, booksData, issuedData] = await Promise.all([
-          getMembers(),
-          getBooks(),
-          getIssuedBooks()
-        ]);
+        const response = await fetch('http://localhost:8000/api/v1/library/dashboard-stats', {
+          credentials: 'include'
+        });
 
-        const members = membersData.user || membersData.users || [];
-        const books = booksData.Books || booksData.book || [];
-        const issuedBooks = issuedData.books || [];
+        if (!response.ok) throw new Error('Failed to fetch stats');
 
-        const currentlyIssued = issuedBooks.filter(book => book.status === 'ISSUED');
-        const returned = issuedBooks.filter(book => book.status === 'RETURNED');
-        
-        const notReturned = currentlyIssued.length; 
+        const data = await response.json();
 
         setStats({
-          totalMembers: members.length,
-          totalBooks: books.length,
-          booksIssued: currentlyIssued.length,
-          booksReturned: returned.length,
-          booksNotReturned: 0 
+          totalMembers: data.stats.totalMembers,
+          totalBooks: data.stats.totalBooks,
+          booksIssued: data.stats.issuedBooks,
+          booksReturned: data.stats.returnedBooks,
+          booksNotReturned: data.stats.overdueBooks
         });
 
       } catch (err) {

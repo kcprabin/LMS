@@ -14,7 +14,7 @@ const AdminReturned = () => {
   const fetchReturnedBooks = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:8000/api/v1/library/seebook', {
+      const res = await fetch('http://localhost:8000/api/v1/library/returned-books', {
         credentials: 'include'
       });
       
@@ -22,8 +22,7 @@ const AdminReturned = () => {
       
       const data = await res.json();
       
-      // Filter only returned books
-      const returned = data.books?.filter(book => book.status === 'RETURNED') || [];
+      const returned = data.books || [];
       setReturnedBooks(returned);
     } catch (err) {
       setError(err.message);

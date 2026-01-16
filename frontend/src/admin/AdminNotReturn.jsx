@@ -14,7 +14,7 @@ const AdminNotReturn = () => {
   const fetchOverdueBooks = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:8000/api/v1/library/seebook', {
+      const res = await fetch('http://localhost:8000/api/v1/library/overdue-books', {
         credentials: 'include'
       });
       
@@ -22,18 +22,7 @@ const AdminNotReturn = () => {
       
       const data = await res.json();
       
-      // Filter for issued books that are overdue (more than 14 days)
-      const now = new Date();
-      const overdue = data.books?.filter(book => {
-        if (book.status !== 'ISSUED') return false;
-        
-        const issuedDate = new Date(book.issuedAt);
-        const dueDate = new Date(issuedDate);
-        dueDate.setDate(dueDate.getDate() + 14);
-        
-        return now > dueDate;
-      }) || [];
-      
+      const overdue = data.books || [];
       setOverdueBooks(overdue);
     } catch (err) {
       setError(err.message);

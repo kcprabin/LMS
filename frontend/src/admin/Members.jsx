@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { FaSearch, FaUserCircle, FaTrash, FaSpinner, FaFilter, FaUserPlus, FaDownload } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 function Members() {
   const [members, setMembers] = useState([]);
@@ -24,6 +25,32 @@ function Members() {
   const addMember = ()=>{
     navigate("/register")
   }
+
+  const handleExport = () => {
+    try {
+      const csv = [
+        ['Email', 'Name', 'Role', 'Registration Date'],
+        ...members.map(m => [
+          m.studentemail,
+          m.name || 'N/A',
+          m.role,
+          m.createdAt ? new Date(m.createdAt).toLocaleDateString() : 'N/A'
+        ])
+      ].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `members_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      
+      toast.success('Members exported successfully!');
+    } catch (err) {
+      toast.error('Failed to export members');
+    }
+  };
 
  
   const fetchMembers = async () => {
@@ -138,7 +165,7 @@ function Members() {
         </div>
         
         <div className="flex gap-3">
-          <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-all shadow-sm">
+          <button onClick={handleExport} className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-all shadow-sm">
             <FaDownload className="w-4 h-4" />
             Export
           </button>

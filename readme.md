@@ -312,12 +312,14 @@ You can also open issues for bug reports, questions, or feature suggestions.
 
 This project is open source. A specific license (for example, MIT) can be added to this repository to formalize usage and contribution terms. Until then, please treat it as a community project intended for learning, experimentation, and extension.
 
-## Author & Contact
+
+
+- ## Author & Contact
 
 - Author: Prabin K.C.
 - GitHub: https://github.com/kcprabin
 - LinkedIn: https://www.linkedin.com/in/prabin-k-c-36159036b/
-- Email: kcprabin2063@gmail.com
+- Email: your.email@example.com (replace with the maintainer’s actual email address)
 
 If you are using or extending this project, feel free to reach out or share your work.
 

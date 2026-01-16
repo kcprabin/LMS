@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlus, FaSearch, FaBook, FaSpinner, FaEdit, FaTrash } from "react-icons/fa";
+import toast from "react-hot-toast";
+import { deleteBook, editBook } from "../fetch";
+import ConfirmModal from "../componets/common/ConfirmModal";
 
 
 
@@ -10,6 +13,9 @@ function AdminBooks() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [editingBook, setEditingBook] = useState(null);
+  const [editForm, setEditForm] = useState({});
+  const [deleting, setDeleting] = useState(null);
 
   // Fetch books from API
   const fetchBooks = async () => {
@@ -26,6 +32,52 @@ function AdminBooks() {
       else setError("Unexpected response format");
     } catch (err) {
       setError(err.message || "Failed to fetch books");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle delete book
+  const handleDeleteBook = async (bookId) => {
+    if (!window.confirm("Are you sure you want to delete this book?")) return;
+    
+    try {
+      setDeleting(bookId);
+      await deleteBook(bookId);
+      setBooks((prev) => prev.filter((b) => b._id !== bookId));
+      toast.success("Book deleted successfully!");
+    } catch (err) {
+      toast.error(err.message || "Failed to delete book");
+    } finally {
+      setDeleting(null);
+    }
+  };
+
+  // Handle edit book
+  const handleEditClick = (book) => {
+    setEditingBook(book._id);
+    setEditForm({
+      title: book.title,
+      author: book.author,
+      publishedDate: book.publishedDate,
+      publication: book.publication,
+      description: book.description || ""
+    });
+  };
+
+  // Save edited book
+  const handleSaveEdit = async () => {
+    try {
+      setLoading(true);
+      await editBook(editingBook, editForm);
+      setBooks((prev) => prev.map((b) => 
+        b._id === editingBook ? { ...b, ...editForm } : b
+      ));
+      toast.success("Book updated successfully!");
+      setEditingBook(null);
+      setEditForm({});
+    } catch (err) {
+      toast.error(err.message || "Failed to update book");
     } finally {
       setLoading(false);
     }
@@ -219,6 +271,7 @@ function AdminBooks() {
 
                 <div className="flex gap-2">
                   <button
+                    onClick={() => handleEditClick(book)}
                     className="flex-1 flex items-center justify-center gap-2 px-3 py-2 
                                bg-indigo-50 text-indigo-600 rounded-lg 
                                hover:bg-indigo-100 transition-colors text-sm font-medium"
@@ -227,17 +280,105 @@ function AdminBooks() {
                     Edit
                   </button>
                   <button
+                    onClick={() => handleDeleteBook(book._id)}
+                    disabled={deleting === book._id}
                     className="flex-1 flex items-center justify-center gap-2 px-3 py-2 
                                bg-red-50 text-red-600 rounded-lg 
-                               hover:bg-red-100 transition-colors text-sm font-medium"
+                               hover:bg-red-100 transition-colors text-sm font-medium disabled:opacity-50"
                   >
-                    <FaTrash className="w-3.5 h-3.5" />
+                    {deleting === book._id ? (
+                      <FaSpinner className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <FaTrash className="w-3.5 h-3.5" />
+                    )}
                     Delete
                   </button>
                 </div>
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Edit Modal */}
+      {editingBook && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Edit Book</h2>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                  <input
+                    type="text"
+                    value={editForm.title}
+                    onChange={(e) => setEditForm({...editForm, title: e.target.value})}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Author</label>
+                  <input
+                    type="text"
+                    value={editForm.author}
+                    onChange={(e) => setEditForm({...editForm, author: e.target.value})}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Published Date</label>
+                  <input
+                    type="number"
+                    value={editForm.publishedDate}
+                    onChange={(e) => setEditForm({...editForm, publishedDate: e.target.value})}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Publication</label>
+                  <input
+                    type="text"
+                    value={editForm.publication}
+                    onChange={(e) => setEditForm({...editForm, publication: e.target.value})}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                  <textarea
+                    value={editForm.description}
+                    onChange={(e) => setEditForm({...editForm, description: e.target.value})}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    rows="3"
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={() => {
+                    setEditingBook(null);
+                    setEditForm({});
+                  }}
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSaveEdit}
+                  disabled={loading}
+                  className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors disabled:opacity-50"
+                >
+                  {loading ? "Saving..." : "Save Changes"}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
